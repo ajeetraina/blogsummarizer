@@ -18,8 +18,13 @@ export const SocialShareButtons = ({ takeaways, blogUrl }: SocialShareButtonsPro
   };
 
   const handleTwitterShare = () => {
-    const text = `Key Takeaways:\n\n${formatTakeaways()}\n\nRead more: ${blogUrl}`;
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    // Twitter character limit - keeping it short and impactful
+    const shortSummary = takeaways.slice(0, 2).map((t, i) => `${i + 1}. ${t.slice(0, 40)}...`).join('\n');
+    const text = `${shortSummary}\n\n${blogUrl}`;
+    
+    // Ensure under 128 chars
+    const finalText = text.length > 128 ? text.slice(0, 125) + '...' : text;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(finalText)}`;
     window.open(twitterUrl, '_blank', 'width=600,height=600');
   };
 
