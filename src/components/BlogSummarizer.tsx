@@ -94,7 +94,7 @@ export const BlogSummarizer = () => {
           AI-Powered Summarization
         </div>
         <h1 className="text-5xl md:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-          Blog Summarizer
+          Key Takeaways
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Transform lengthy blog posts into shareable key takeaways instantly
