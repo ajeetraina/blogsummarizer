@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -7,12 +7,23 @@ import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Sparkles, Copy, CheckCheck } from 'lucide-react';
 import { SocialShareButtons } from './SocialShareButtons';
 
-export const BlogSummarizer = () => {
-  const [url, setUrl] = useState('');
+interface BlogSummarizerProps {
+  initialUrl?: string;
+}
+
+export const BlogSummarizer = ({ initialUrl = '' }: BlogSummarizerProps) => {
+  const [url, setUrl] = useState(initialUrl);
   const [takeaways, setTakeaways] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+
+  // Auto-summarize when initialUrl is provided
+  useEffect(() => {
+    if (initialUrl && url) {
+      handleSummarize();
+    }
+  }, [initialUrl]);
 
   const handleSummarize = async () => {
     if (!url.trim()) {

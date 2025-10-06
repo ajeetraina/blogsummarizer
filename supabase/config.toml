@@ -1,1 +1,7 @@
 project_id = "mnjassxceabkqsijwxcf"
+
+[functions.summarize-blog]
+verify_jwt = false
+
+[functions.fetch-blogs]
+verify_jwt = false

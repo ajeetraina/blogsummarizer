@@ -11,6 +11,36 @@ export const SocialShareButtons = ({ takeaways, blogUrl }: SocialShareButtonsPro
     return takeaways.map((t, i) => `${i + 1}. ${t}`).join('\n\n');
   };
 
+  const createCompellingSummary = () => {
+    // Create a compelling summary within 128 characters
+    // Format: "🔑 5 takeaways: [brief summary of main theme]"
+    
+    // Extract key themes/topics from all takeaways
+    const combinedText = takeaways.join(' ').toLowerCase();
+    
+    // Common tech/docker keywords to highlight
+    const keywords = ['docker', 'container', 'kubernetes', 'devops', 'cloud', 'deployment', 'security', 'performance'];
+    const foundKeywords = keywords.filter(kw => combinedText.includes(kw));
+    
+    let summary = '🔑 Key insights: ';
+    
+    if (foundKeywords.length > 0) {
+      summary += foundKeywords.slice(0, 2).join(' & ');
+    } else {
+      // Fallback: use first few words from first takeaway
+      const firstWords = takeaways[0].split(' ').slice(0, 4).join(' ');
+      summary += firstWords;
+    }
+    
+    // Ensure we have room for the URL
+    const maxSummaryLength = 95; // Leave room for URL and spacing
+    if (summary.length > maxSummaryLength) {
+      summary = summary.slice(0, maxSummaryLength - 3) + '...';
+    }
+    
+    return summary;
+  };
+
   const handleLinkedInShare = () => {
     const text = `Key Takeaways from ${blogUrl}\n\n${formatTakeaways()}\n\n#BlogSummary #KeyTakeaways`;
     const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(blogUrl)}&summary=${encodeURIComponent(text)}`;
@@ -18,18 +48,19 @@ export const SocialShareButtons = ({ takeaways, blogUrl }: SocialShareButtonsPro
   };
 
   const handleTwitterShare = () => {
-    // Twitter character limit - keeping it short and impactful
-    const shortSummary = takeaways.slice(0, 2).map((t, i) => `${i + 1}. ${t.slice(0, 40)}...`).join('\n');
-    const text = `${shortSummary}\n\n${blogUrl}`;
+    // Create compelling summary within 128 chars total
+    const summary = createCompellingSummary();
+    const text = `${summary}\n${blogUrl}`;
     
-    // Ensure under 128 chars
+    // Final safety check
     const finalText = text.length > 128 ? text.slice(0, 125) + '...' : text;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(finalText)}`;
     window.open(twitterUrl, '_blank', 'width=600,height=600');
   };
 
   const handleBlueskyShare = () => {
-    const text = `Key Takeaways from ${blogUrl}\n\n${formatTakeaways()}`;
+    const summary = createCompellingSummary();
+    const text = `${summary}\n${blogUrl}\n\n${formatTakeaways()}`;
     const blueskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(text)}`;
     window.open(blueskyUrl, '_blank', 'width=600,height=600');
   };
