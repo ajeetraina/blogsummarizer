@@ -93,12 +93,12 @@ function parseRSSFeed(xmlText: string, source: string): BlogPost[] {
       if (category) categories.push(category.toLowerCase());
     }
     
-    // Filter Collabnix posts to only include Docker-related content
+    // Filter Collabnix posts to only include Docker and Kubernetes related content
     if (source === 'Collabnix') {
-      const hasDockerCategory = categories.some(cat => 
-        cat.includes('docker') || cat.includes('container')
+      const hasRelevantCategory = categories.some(cat => 
+        cat.includes('docker') || cat.includes('container') || cat.includes('kubernetes')
       );
-      if (!hasDockerCategory) continue;
+      if (!hasRelevantCategory) continue;
     }
     
     if (titleMatch && linkMatch) {
