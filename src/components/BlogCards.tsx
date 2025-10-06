@@ -121,13 +121,13 @@ export const BlogCards = ({ onSelectBlog }: BlogCardsProps) => {
                     <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
 
-                  <h3 className="text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h3>
+              <h3 className="text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+                {post.title}
+              </h3>
 
-                  <p className="text-sm text-muted-foreground line-clamp-3">
-                    {post.description}
-                  </p>
+              <p className="text-sm text-muted-foreground line-clamp-4 leading-relaxed">
+                {post.description}
+              </p>
 
                   <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t border-border">
                     <Calendar className="w-3 h-3" />
