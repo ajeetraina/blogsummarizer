@@ -23,8 +23,7 @@ serve(async (req) => {
 
     const blogSources = [
       { url: 'https://ajeetraina.com/feed/', source: 'Ajeet Raina' },
-      { url: 'https://www.docker.com/blog/feed/', source: 'Docker Blog' },
-      { url: 'https://collabnix.com/feed/', source: 'Collabnix' }
+      { url: 'https://www.docker.com/blog/feed/', source: 'Docker Blog' }
     ];
 
     const allPosts: BlogPost[] = [];
@@ -85,21 +84,6 @@ function parseRSSFeed(xmlText: string, source: string): BlogPost[] {
     const descriptionMatch = itemContent.match(descriptionRegex);
     const pubDateMatch = itemContent.match(pubDateRegex);
     
-    // Extract categories for Collabnix
-    const categories: string[] = [];
-    let categoryMatch;
-    while ((categoryMatch = categoryRegex.exec(itemContent)) !== null) {
-      const category = categoryMatch[1] || categoryMatch[2];
-      if (category) categories.push(category.toLowerCase());
-    }
-    
-    // Filter Collabnix posts to only include Docker and Kubernetes related content
-    if (source === 'Collabnix') {
-      const hasRelevantCategory = categories.some(cat => 
-        cat.includes('docker') || cat.includes('container') || cat.includes('kubernetes')
-      );
-      if (!hasRelevantCategory) continue;
-    }
     
     if (titleMatch && linkMatch) {
       const title = titleMatch[1] || titleMatch[2] || '';

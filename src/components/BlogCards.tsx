@@ -65,12 +65,18 @@ export const BlogCards = ({ onSelectBlog }: BlogCardsProps) => {
         return 'bg-primary/10 text-primary border-primary/20';
       case 'Docker Blog':
         return 'bg-accent/10 text-accent border-accent/20';
-      case 'Collabnix':
-        return 'bg-secondary-foreground/10 text-secondary-foreground border-secondary-foreground/20';
       default:
         return 'bg-muted text-muted-foreground border-border';
     }
   };
+
+  const groupedPosts = posts.reduce((acc, post) => {
+    if (!acc[post.source]) {
+      acc[post.source] = [];
+    }
+    acc[post.source].push(post);
+    return acc;
+  }, {} as Record<string, BlogPost[]>);
 
   if (isLoading) {
     return (
@@ -87,7 +93,7 @@ export const BlogCards = ({ onSelectBlog }: BlogCardsProps) => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <div className="text-center space-y-2">
         <h2 className="text-3xl font-bold">Latest Docker & Container Blogs</h2>
         <p className="text-muted-foreground">
@@ -95,49 +101,56 @@ export const BlogCards = ({ onSelectBlog }: BlogCardsProps) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post, index) => (
-          <Card
-            key={index}
-            className="group p-6 hover:shadow-glow transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 bg-card/50 backdrop-blur-sm"
-            onClick={() => onSelectBlog(post.link)}
-          >
-            <div className="space-y-4">
-              <div className="flex items-start justify-between gap-2">
-                <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${getSourceColor(post.source)}`}>
-                  {post.source}
-                </span>
-                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              </div>
-
-              <h3 className="text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors">
-                {post.title}
-              </h3>
-
-              <p className="text-sm text-muted-foreground line-clamp-3">
-                {post.description}
-              </p>
-
-              <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t border-border">
-                <Calendar className="w-3 h-3" />
-                {formatDate(post.pubDate)}
-              </div>
-
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSelectBlog(post.link);
-                }}
+      {Object.entries(groupedPosts).map(([source, sourcePosts]) => (
+        <div key={source} className="space-y-6">
+          <h3 className="text-2xl font-semibold border-b border-border pb-2">
+            {source}
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sourcePosts.map((post, index) => (
+              <Card
+                key={index}
+                className="group p-6 hover:shadow-glow transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 bg-card/50 backdrop-blur-sm"
+                onClick={() => onSelectBlog(post.link)}
               >
-                Get Key Takeaways
-              </Button>
-            </div>
-          </Card>
-        ))}
-      </div>
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${getSourceColor(post.source)}`}>
+                      {post.source}
+                    </span>
+                    <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+
+                  <h3 className="text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-sm text-muted-foreground line-clamp-3">
+                    {post.description}
+                  </p>
+
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t border-border">
+                    <Calendar className="w-3 h-3" />
+                    {formatDate(post.pubDate)}
+                  </div>
+
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelectBlog(post.link);
+                    }}
+                  >
+                    Get Key Takeaways
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
