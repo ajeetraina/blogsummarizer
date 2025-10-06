@@ -15,7 +15,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-accent/10">
+    <div className="min-h-screen bg-white">
       <div ref={summarizerRef}>
         <BlogSummarizer key={selectedUrl} initialUrl={selectedUrl} />
       </div>
