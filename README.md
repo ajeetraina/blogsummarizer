@@ -1,73 +1,87 @@
-# Welcome to your Lovable project
+# Blog Summarizer 📝
 
-## Project info
+An AI-powered blog summarization tool that extracts and summarizes content from blog URLs using modern web technologies.
 
-**URL**: https://lovable.dev/projects/7fcd7d74-ebe9-4def-87b9-d0219c54e795
+## Tech Stack
 
-## How can I edit this code?
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite 5
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Backend**: Supabase (Database & Auth)
+- **State Management**: TanStack Query (React Query)
+- **Routing**: React Router DOM
+- **Charts**: Recharts for data visualization
+- **UI Components**: Radix UI primitives with shadcn/ui
+- **Form Handling**: React Hook Form with Zod validation
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- 🤖 AI-powered blog content summarization
+- 📚 Browse and select from curated blog posts
+- 💾 Save and manage summarized content
+- 🎨 Modern UI with dark/light theme support
+- ⚡ Fast and responsive interface
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7fcd7d74-ebe9-4def-87b9-d0219c54e795) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ and npm
+- Supabase account (for database)
+- Or Docker and Docker Compose
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Environment Setup
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Create a `.env` file in the root directory with your Supabase credentials:
 
-Follow these steps:
+```env
+VITE_SUPABASE_PROJECT_ID=your_project_id
+VITE_SUPABASE_PUBLISHABLE_KEY=your_publishable_key
+VITE_SUPABASE_URL=your_supabase_url
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Local Development
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+# Clone the repository
+git clone https://github.com/ajeetraina/blogsummarizer.git
+cd blogsummarizer
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Visit `http://localhost:5173` to view the application.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Docker Setup
 
-**Use GitHub Codespaces**
+Run the application using Docker:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+# Build and run with Docker Compose
+docker compose up
 
-## What technologies are used for this project?
+# Or build manually
+docker build -t blogsummarizer .
+docker run -p 8080:80 \
+  -e VITE_SUPABASE_PROJECT_ID=your_project_id \
+  -e VITE_SUPABASE_PUBLISHABLE_KEY=your_key \
+  -e VITE_SUPABASE_URL=your_url \
+  blogsummarizer
+```
 
-This project is built with:
+Visit `http://localhost:8080` to view the application.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Available Scripts
 
-## How can I deploy this project?
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-Simply open [Lovable](https://lovable.dev/projects/7fcd7d74-ebe9-4def-87b9-d0219c54e795) and click on Share -> Publish.
+## License
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is open source and available under the MIT License.
